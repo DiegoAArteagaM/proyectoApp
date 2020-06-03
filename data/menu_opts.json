@@ -1,0 +1,14 @@
+{
+    "nombreApp" : "Componentes",
+    "rutas" : [
+        {
+            "ruta" : "login"
+        },
+        {
+            "ruta" : "registro"
+        },
+        {
+            "ruta" : "scan"
+        }
+    ]
+}
