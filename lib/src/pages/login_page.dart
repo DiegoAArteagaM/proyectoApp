@@ -1,7 +1,18 @@
 
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget{
+
+  @override
+  _LoginPage createState()=>_LoginPage();
+  
+}
+
+
+class _LoginPage extends State<LoginPage>{
+
+  String _mail;
+  String _password;
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +96,11 @@ class LoginPage extends StatelessWidget {
                 hintText: "ejemplo@correo.com",
                 labelText: "Correo Electronico",
               ),
-
+              onChanged: (mail){
+                setState((){
+                  this._mail = mail;
+                });
+              }  ,
             ),
           );
       
@@ -98,11 +113,17 @@ class LoginPage extends StatelessWidget {
 
           child: TextField(
             obscureText: true,
-            keyboardType: TextInputType.emailAddress,
+            keyboardType: TextInputType.text,
             decoration: InputDecoration(
               icon : Icon(Icons.lock_outline, color: Colors.green),
               labelText: "Contraseña",
+            
             ),
+            onChanged: (password){
+              setState((){
+                this._password = password;
+              });
+            } ,
           ),
         );
       
@@ -120,7 +141,9 @@ class LoginPage extends StatelessWidget {
       elevation: 0.0,
       color: Colors.green,
       textColor: Colors.white,
-      onPressed: (){},
+      onPressed: (){
+        _login();
+      } 
     );
   }
 
@@ -172,5 +195,11 @@ class LoginPage extends StatelessWidget {
         
       ],
     );
+  }
+
+
+  void _login(){
+    final mail = this._mail;
+    final password = this._password;
   }
 }
