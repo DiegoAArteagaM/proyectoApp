@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
         routes: <String, WidgetBuilder>{
           "login": (BuildContext context) => LoginPage(),
           "registro": (BuildContext context) => InputPage(),
+          //"scan": (BuildContext context) => ScanPage(),
           "/" : (BuildContext context) => HomePage(),
         },
         theme: ThemeData(
