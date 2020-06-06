@@ -26,6 +26,7 @@ dependencies:
   http:
   shared_preferences:
   jaguar_jwt: 2.1.6
+  barcode_scan: ^3.0.1
 
 dev_dependencies:
   flutter_test:
