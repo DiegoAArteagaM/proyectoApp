@@ -1,11 +1,30 @@
 
-
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
+import 'package:formvalidation/src/pages/scan_page.dart';
 import 'package:formvalidation/src/providers/rutas_provider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
 
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  String qrEscaneado;
+  
   final rutasProvider = new RutasProvider();
+
+  Future _scanQR() async {
+    
+    try{ 
+      dynamic scan = (await BarcodeScanner.scan()).rawContent.toString();
+      qrEscaneado = scan;
+      print("se escaneo >>>>>>>>>>>>>>>>>>>>>>>>>> $qrEscaneado");
+    }catch(e){
+      e.toString();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +44,6 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  //Metodo para dibujar los elementos graficos en la pantalla inicial
   Widget _crearPantalla(BuildContext context){
 
     final size = MediaQuery.of(context).size;
@@ -128,8 +146,12 @@ class HomePage extends StatelessWidget {
                     ),
                     elevation: 0.0,
                     onPressed: (){
-                      Navigator.pushNamed(context, opt[2]["ruta"]);
-                    },
+                    _scanQR().then((valor){
+                      Navigator.of(context).push(MaterialPageRoute( 
+                      builder: (context) => ScanPage(qrEscaneado),
+                    ));
+                    });  
+                    }                    
                   ),
 
                   SizedBox(height: 50, width: double.infinity),                  
@@ -142,8 +164,6 @@ class HomePage extends StatelessWidget {
         );
       }
 
-    );
-
-    
+    ); 
   }
 }
