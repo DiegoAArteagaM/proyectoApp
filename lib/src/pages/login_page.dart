@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:formvalidation/src/providers/users_providers.dart';
 import 'package:formvalidation/src/utils/alert_util.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget{
 
@@ -13,26 +14,54 @@ class LoginPage extends StatefulWidget{
 
 class _LoginPage extends State<LoginPage>{
 
+  SharedPreferences _prefs;
   String _mail;
   String _password;
   UserProvider userProvider = UserProvider();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body : Stack(
-        children: <Widget>[
-          _crearFondo(context),
-          _loginForm(context),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.green,
-        child: Icon(Icons.arrow_back),
-        onPressed: (){         
-          Navigator.pop(context);
+    return FutureBuilder(
+      future: SharedPreferences.getInstance(),
+      builder: ( BuildContext context, asyncData ){
+
+        if( asyncData.hasData ){
+          this._prefs = asyncData.data;
+
+          try{
+
+            int tokenExpiration = this._prefs.getInt("expiration");
+            int currentTime = (new DateTime.now().microsecondsSinceEpoch);
+
+            if( tokenExpiration>currentTime ){
+              Navigator.pushReplacementNamed(context, "/dashboard");
+            }
+
+          }on Exception catch(e){
+
+            print(e.toString());
+
+          }
+
+          
         }
-      )
+
+        return Scaffold(
+          body : Stack(
+            children: <Widget>[
+              _crearFondo(context),
+              _loginForm(context),
+            ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: Colors.green,
+            child: Icon(Icons.arrow_back),
+            onPressed: (){         
+              Navigator.pop(context);
+            }
+          )
+        );
+      },
     );
   }
 

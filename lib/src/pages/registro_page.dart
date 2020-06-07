@@ -11,12 +11,15 @@ class InputPage extends StatefulWidget {
   _InputPageState createState() => _InputPageState();
 }
 
+enum Genero{ M, F }
+
 class _InputPageState extends State<InputPage> {
 
   final userProvider = UserProvider();
   
   String _fecha = ""; //Para guardar la seleccion del dateChoose
   String _nombre ="";
+  Genero _genero;
   String _email ="";
   String _contrasena="";
   String _dependencia="";
@@ -58,6 +61,8 @@ class _InputPageState extends State<InputPage> {
 
                   //Se crean los objetos visuales de la pantalla
                   _crearInput(),
+                  Divider(),
+                  _crearGenero(),
                   Divider(),
                   _crearDepenencia(),
                   Divider(),
@@ -141,6 +146,48 @@ class _InputPageState extends State<InputPage> {
     },
     );
 
+  }
+
+  Widget _crearGenero(){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        Expanded(
+          child: ListTile(
+              title: const Text("Masculino"),
+              leading: Radio(
+                value: Genero.M,
+                activeColor: Colors.green[600],
+                groupValue: _genero,
+                onChanged: (Genero g){
+                  setState(() {
+                    this._genero =g;
+                  });
+                },
+              ),
+            ),
+        ),
+        Expanded(
+          child: ListTile(
+              
+              title: const Text("Femenino"),
+              leading: Radio(
+                value: Genero.F,
+                groupValue: _genero,
+                activeColor: Colors.green[600],
+                onChanged: (Genero g){
+                  setState(() {
+                    this._genero =g;
+                  });
+                },
+              ),
+            )
+          
+        ),
+        
+
+      ],
+    );
   }
 
   Widget _crearDepenencia(){
@@ -429,6 +476,7 @@ Widget _crearText(){
   void _registrarEncuesta( BuildContext context ){
     final formData = {
       "name":this._nombre,
+      "gender":this._genero.toString(),
       "email":this._email,
       "dependencia":this._dependencia,
       "birthdate":this._fecha,

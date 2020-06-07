@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:formvalidation/src/utils/routes_util.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Menu extends StatelessWidget {
-  
+  SharedPreferences _prefs;
+  Menu(){
+
+    SharedPreferences.getInstance().then((data){
+      this._prefs =data;
+    });
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -35,45 +45,61 @@ class Menu extends StatelessWidget {
             ListTile(
               title: Row(
                 children: <Widget>[
-                  Icon(Icons.book),
+                  Icon(Icons.home, color: Colors.green),
                   Padding(
                     padding: EdgeInsets.only(left: 8.0),
-                    child: Text("actualizar info"),
+                    child: Text("Inicio"),
                   )
                 ],
               ),
               onTap: (){
                 Navigator.of(context).pop();
-                Navigator.pushNamed(context, Routes.actualizar);
+                Navigator.pushNamed(context, Routes.dashboard);
                 
               },
             ),
             ListTile(
               title: Row(
                 children: <Widget>[
-                  Icon(Icons.book),
+                  Icon(Icons.description, color: Colors.green),
                   Padding(
                     padding: EdgeInsets.only(left: 8.0),
-                    child: Text("actualizar info"),
+                    child: Text("Act. Información"),
                   )
                 ],
               ),
               onTap: (){
                 Navigator.of(context).pop();
+                Navigator.pushNamed(context, Routes.actualizar);
               },
             ),
             ListTile(
               title: Row(
                 children: <Widget>[
-                  Icon(Icons.book),
+                  Icon(Icons.compare, color: Colors.green),
                   Padding(
                     padding: EdgeInsets.only(left: 8.0),
-                    child: Text("actualizar info"),
+                    child: Text("Scanear Código"),
                   )
                 ],
               ),
               onTap: (){
                 Navigator.of(context).pop();
+                Navigator.pushNamed(context, Routes.scan);
+              },
+            ),
+             ListTile(
+              title: Row(
+                children: <Widget>[
+                  Icon(Icons.exit_to_app, color: Colors.green),
+                  Padding(
+                    padding: EdgeInsets.only(left: 8.0),
+                    child: Text("Salir"),
+                  )
+                ],
+              ),
+              onTap: (){
+                SystemNavigator.pop();
               },
             ),
             
