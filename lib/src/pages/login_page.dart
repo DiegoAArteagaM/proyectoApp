@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:formvalidation/src/providers/users_providers.dart';
+import 'package:formvalidation/src/utils/alert_util.dart';
 
 class LoginPage extends StatefulWidget{
 
@@ -13,6 +15,7 @@ class _LoginPage extends State<LoginPage>{
 
   String _mail;
   String _password;
+  UserProvider userProvider = UserProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +75,7 @@ class _LoginPage extends State<LoginPage>{
                 SizedBox(height: 30.0),
                 _crearPassword(),
                 SizedBox(height: 30.0),
-                _crearBoton()
+                _crearBoton(context)
               ],
             ),
           ),
@@ -129,7 +132,7 @@ class _LoginPage extends State<LoginPage>{
       
    }
 
-  Widget _crearBoton(){
+  Widget _crearBoton(BuildContext context){
     return RaisedButton(
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
@@ -142,7 +145,7 @@ class _LoginPage extends State<LoginPage>{
       color: Colors.green,
       textColor: Colors.white,
       onPressed: (){
-        _login();
+        _login(context );
       } 
     );
   }
@@ -198,8 +201,21 @@ class _LoginPage extends State<LoginPage>{
   }
 
 
-  void _login(){
+  void _login(BuildContext context){
     final mail = this._mail;
     final password = this._password;
+
+    userProvider.auth(mail, password).then((resp){
+
+      if( resp["success"]==false ){
+        showDialogMsg(context, "Error", resp["message"]);
+      }
+      else{
+        Navigator.pushReplacementNamed(context, "/dashboard");
+      }
+
+    });
   }
+
+  
 }

@@ -97,25 +97,25 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(height: 30.0, width: double.infinity),
                   Icon(Icons.local_hospital, color: Colors.white, size: 100.0), //Icono pantalla inicial
 
-                  SizedBox(height: 150.0, width: double.infinity),
-
-                  //Boton ingresar
-                  RaisedButton(
-                    child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
-                        child: Text("Ingresar", style: TextStyle(fontSize: 25, color: Colors.green)),
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    
-                    elevation: 0.0,
-                    onPressed: (){
-                    Navigator.pushNamed(context, opt[0]["ruta"]);
-                    },
-                  ),
-
                   SizedBox(height: 50, width: double.infinity),
+          
+                             //Boton ingresar
+                            RaisedButton(
+                              child: Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
+                                  child: Text("Ingresar", style: TextStyle(fontSize: 25, color: Colors.green)),
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                              
+                              elevation: 0.0,
+                              onPressed: (){
+                                Navigator.pushNamed(context, opt[0]["ruta"]);
+                              },
+                            ),
+
+                            SizedBox(height: 50, width: double.infinity),
 
                   //Boton Registro
                   RaisedButton(
@@ -153,12 +153,15 @@ class _HomePageState extends State<HomePage> {
                     });  
                     }                    
                   ),
+                  SizedBox(height: 50, width: double.infinity)
+                ]
+                    
+                ),
+                                    
 
-                  SizedBox(height: 50, width: double.infinity),                  
-
-                ],
+              
               )
-            )
+            
             
           ],
         );

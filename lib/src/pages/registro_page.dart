@@ -453,7 +453,6 @@ Widget _crearText(){
     userProvider.guardarEncuesta(formData).then((resp){
       if( resp ){
         _showMessageRegister(context);
-        sleep(const Duration(milliseconds: 1500));
         Navigator.pushNamed(context, "login");
       } 
       else{
