@@ -1,4 +1,4 @@
-
+import 'package:formvalidation/src/providers/users_providers.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:formvalidation/src/pages/scan_page.dart';
@@ -12,8 +12,17 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String qrEscaneado;
-  
+  UserProvider userProvider = UserProvider();
   final rutasProvider = new RutasProvider();
+  Map<String, dynamic> mapa = Map();
+  String name;
+  List<dynamic> sintomas;
+
+  mostrar(){
+  userProvider.getEncuestaByIdUser(qrEscaneado).then((valor){
+    mapa = valor["data"];
+  });
+}
 
   Future _scanQR() async {
     
@@ -99,8 +108,8 @@ class _HomePageState extends State<HomePage> {
 
                   SizedBox(height: 50, width: double.infinity),
           
-                             //Boton ingresar
-                            RaisedButton(
+                   //Boton ingresar
+                  RaisedButton(
                               child: Container(
                                   padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
                                   child: Text("Ingresar", style: TextStyle(fontSize: 25, color: Colors.green)),
@@ -115,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                               },
                             ),
 
-                            SizedBox(height: 50, width: double.infinity),
+                 SizedBox(height: 50, width: double.infinity),          
 
                   //Boton Registro
                   RaisedButton(
@@ -147,8 +156,10 @@ class _HomePageState extends State<HomePage> {
                     elevation: 0.0,
                     onPressed: (){
                     _scanQR().then((valor){
+                      mostrar();
+                      print(mapa);
                       Navigator.of(context).push(MaterialPageRoute( 
-                      builder: (context) => ScanPage(qrEscaneado),
+                      builder: (context) => ScanPage(qrEscaneado, mapa),
                     ));
                     });  
                     }                    
@@ -157,11 +168,8 @@ class _HomePageState extends State<HomePage> {
                 ]
                     
                 ),
-                                    
-
-              
-              )
             
+              )
             
           ],
         );

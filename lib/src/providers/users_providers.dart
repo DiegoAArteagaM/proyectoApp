@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -150,17 +149,13 @@ class UserProvider{
     // concatenar los parametros a la peticion
     URLQueryParams queryParams = new URLQueryParams();
 
-    queryParams.append("auth", token);
+    //queryParams.append("auth", token);
     queryParams.append("orderBy", "\"id_user\"");
     queryParams.append("equalTo", "\"$id_user\"");
     queryParams.append("limitToLast", 1);
 
-
     // añadir los parametros a la url del servicio de firebase
-    url=url+queryParams.toString();
-
-
-    
+    url=url+queryParams.toString();    
 
     final response = await http.get(
       url,
@@ -172,13 +167,11 @@ class UserProvider{
     final respFormated = json.decode(response.body);
 
     if( response.statusCode == 200 ){
-
       return {"success":true, "data":respFormated[respFormated.keys.toList()[0]]};
     }
     else{
       return {"success":false};
     }
-
   }
 
 
