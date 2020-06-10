@@ -18,11 +18,6 @@ class _HomePageState extends State<HomePage> {
   String name;
   List<dynamic> sintomas;
 
-  mostrar(){
-  userProvider.getEncuestaByIdUser(qrEscaneado).then((valor){
-    mapa = valor["data"];
-  });
-}
 
   Future _scanQR() async {
     
@@ -155,13 +150,18 @@ class _HomePageState extends State<HomePage> {
                     ),
                     elevation: 0.0,
                     onPressed: (){
-                    _scanQR().then((valor){
-                      mostrar();
-                      print(mapa);
-                      Navigator.of(context).push(MaterialPageRoute( 
-                      builder: (context) => ScanPage(qrEscaneado, mapa),
-                    ));
-                    });  
+                      _scanQR().then((valor){
+                        return userProvider.getEncuestaByIdUser(qrEscaneado);
+
+                        
+                      }).then((response){
+                        print(response);
+                        this.mapa = response;
+                        Navigator.of(context).push(MaterialPageRoute( 
+                            builder: (context) => ScanPage(qrEscaneado, this.mapa["data"]),
+                          )
+                        );
+                      });  
                     }                    
                   ),
                   SizedBox(height: 50, width: double.infinity)

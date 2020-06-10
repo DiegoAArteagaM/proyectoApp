@@ -42,7 +42,7 @@ ScanPageState(this.qrEscaneado, this.mapa);
 
 @override
 Widget build(BuildContext context) {  
- 
+
   return Scaffold(
     appBar: AppBar(
       title: Text("RESULTADO ESCANER"),
