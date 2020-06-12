@@ -39,7 +39,14 @@ class Dashboard extends StatelessWidget {
             
           ),
           drawer: Menu(),
-          body:  body
+          body:  body,
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: Colors.green,
+            child: Icon(Icons.arrow_back),
+            onPressed: (){
+              Navigator.pop(context);
+            }
+          ),
         
 
           
@@ -55,7 +62,7 @@ class Dashboard extends StatelessWidget {
     return Column(
       children: <Widget>[
         SizedBox(
-          height: 10,
+          height: 80.0,
         ),
         Center(
           child: Text(
@@ -68,11 +75,11 @@ class Dashboard extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 10,
+          height: 100,
         ),
         Center(
           child: Text(
-            "Escanea mi Código",
+            "ESTE ES TU CODIGO QR",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 25,
@@ -85,7 +92,7 @@ class Dashboard extends StatelessWidget {
           child: QrImage(
             data: this._prefs.getString("user_id"),
             version: QrVersions.auto,
-            size: 200.0,
+            size: 300.0,
           ),
         )
       ],

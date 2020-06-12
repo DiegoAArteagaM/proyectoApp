@@ -10,7 +10,7 @@ final Map<String, dynamic> mapa;
 ScanPage(this.qrEscaneado, this.mapa);
 
 @override
-ScanPageState createState() => ScanPageState(qrEscaneado, mapa);
+ScanPageState createState() => ScanPageState(this.qrEscaneado, this.mapa);
 }
 
 //======================================================================================================================================
@@ -23,6 +23,17 @@ String name;
 String dependencia;
 String email;
 List<dynamic> sintomas;
+
+@override
+void initState() { 
+  super.initState();
+  
+}
+
+ScanPageState(qqrEscaneado, map){
+  this.mapa = map;
+  this.qrEscaneado = qqrEscaneado;
+}
 
   bool tos = false;
   bool fiebre = false;
@@ -37,8 +48,6 @@ List<dynamic> sintomas;
   bool dolorP = false;
   bool dificultadM = false;
   bool erupciones  = false;
-
-ScanPageState(this.qrEscaneado, this.mapa);
 
 @override
 Widget build(BuildContext context) {  
@@ -56,6 +65,7 @@ Widget build(BuildContext context) {
 
 List<Widget> _crearItems(){
   
+  print("se escaneo //////////////////////////////// >>>>>>>>>>>>>>>>>>>>>>>>>> $mapa");
   List<Widget> lista = new List<Widget>();
   name = mapa["name"];
   dependencia = mapa["dependencia"];
