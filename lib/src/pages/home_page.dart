@@ -1,3 +1,4 @@
+
 import 'package:formvalidation/src/providers/users_providers.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
   String qrEscaneado;
   UserProvider userProvider = UserProvider();
   final rutasProvider = new RutasProvider();
@@ -18,6 +20,13 @@ class _HomePageState extends State<HomePage> {
   String name;
   List<dynamic> sintomas;
 
+  String titulo1 = "Ten en cuenta";
+  String titulo2 = "No mientas";
+  String titulo3 = "Cuidate";
+
+  String texto1 = "El correcto funcionamiento de esta aplicaion esta sujeto a la veracidad de la informacion proporcinada por los usuarios, por tal razon te solicitamos que los datos que brindes lo hagas de forma etica y sincera";
+  String texto2 = "La sinceridad de tus respuestas es primordial, por este motivo te recordamos que la Normatividad Colombiana para enfrentar la emergencia sanitaria en el Articulo 368 del codigo penal, obliga a la poblacion a seguir las indicaciones del gobierno para prevenir la propagacion del Covid-19, si mientes sobre tu estado de salud frente al Virus violaras este articulo ";
+  String texto3 = "Esta App fue desarrollada con el fin de ayudar a mitigar los efectos del Covid-19, usa la opcion actualizar datos para actualizar tu estado de salud a diario y ayudar al Quindio a superar la emergencia sanitaria";
 
   Future _scanQR() async {
     
@@ -33,48 +42,38 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("QRona"),
+      ),
       body : Stack(
-        children: <Widget>[
-          _crearPantalla(context),
-         
+        children: <Widget>[          
+          _crearPantalla(context),         
         ],
       ),
       floatingActionButton: FloatingActionButton(
         
-        backgroundColor: Colors.white,
-        child: Icon(Icons.mail, color: Colors.green),
-        onPressed: (){},      
+        backgroundColor: Colors.green,
+        child: Icon(Icons.camera_alt, color: Colors.white, size: 40.0,),
+        onPressed: (){
+
+          _scanQR().then((valor){
+                        return userProvider.getEncuestaByIdUser(qrEscaneado);                        
+                      }).then((response){
+                        print(response);
+                        this.mapa = response;
+                        Navigator.of(context).push(MaterialPageRoute( 
+                            builder: (context) => ScanPage(qrEscaneado, this.mapa["data"]),
+                          )
+                        );
+                      });  
+
+        },      
       ),
     );
   }
 
   Widget _crearPantalla(BuildContext context){
-
-    final size = MediaQuery.of(context).size;
-
-    //Sentencia para poner el color de fondo con efecto gradiente
-    final fondo = Container(
-      height: size.height*1,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: <Color>[
-            Color.fromRGBO(41, 106, 67, 1.0),
-            Color.fromRGBO(2, 128, 53, 1.0)
-          ]
-        ),
-      ),
-    );
-
-    //Sentencia para crear objeto circulo del fondo
-    final circulo = Container(
-      width: 100.0,
-      height: 100.0,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(100.0),
-        color: Color.fromRGBO(255, 255, 255, 0.05)
-      ),
-    );
 
     return FutureBuilder(
 
@@ -85,86 +84,53 @@ class _HomePageState extends State<HomePage> {
           final List<dynamic> opt = snapshot.data; 
 
           return Stack(
-          children: <Widget>[
-            fondo, // se agrega el fondo al Stack
-            Positioned(top: 90.0, left:30.0, child: circulo),         //Dibuja un circulo en el fondo
-            Positioned(top: -40.0, right:-30.0, child: circulo),      //Dibuja un circulo en el fondo
-            Positioned(bottom: -50.0, right:-10.0, child: circulo),   //Dibuja un circulo en el fondo
-            Positioned(bottom: 120.0, right:20.0, child: circulo),    //Dibuja un circulo en el fondo
-            Positioned(bottom: -50.0, left:-20.0, child: circulo),    //Dibuja un circulo en el fondo
+          children: <Widget>[ //Dibuja un circulo en el fondo
 
             Container(
-              padding: EdgeInsets.only(top:80.0),
+              padding: EdgeInsets.only(top:10.0),
               child:Column(
                 children: <Widget>[
-                  
-                  SizedBox(height: 30.0, width: double.infinity),
-                  Icon(Icons.local_hospital, color: Colors.white, size: 100.0), //Icono pantalla inicial
+                  card(texto2, titulo2),
 
-                  SizedBox(height: 50, width: double.infinity),
-          
-                   //Boton ingresar
+                  SizedBox(height: 10, width: double.infinity),
+                  card(texto1, titulo1),
+
+                  SizedBox(height: 10, width: double.infinity),
+                  card(texto3, titulo3),
+
+                  SizedBox(height: 50, width: double.infinity),  
+                  //Boton ingresar
                   RaisedButton(
-                              child: Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
-                                  child: Text("Ingresar", style: TextStyle(fontSize: 25, color: Colors.green)),
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5.0),
-                              ),
-                              
-                              elevation: 0.0,
-                              onPressed: (){
-                                Navigator.pushNamed(context, opt[0]["ruta"]);
-                              },
-                            ),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
+                      child: Text("Ingresar", style: TextStyle(fontSize: 25, color: Colors.green)),
+                    ),
+                    shape: StadiumBorder(),
+                    elevation: 0.0,
+                    onPressed: (){
+                      Navigator.pushNamed(context, opt[0]["ruta"]);
+                    },
+                  ),
 
-                 SizedBox(height: 50, width: double.infinity),          
+                  SizedBox(height: 10, width: double.infinity),          
 
                   //Boton Registro
                   RaisedButton(
                     child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 60.0, vertical: 15.0),
                         child: Text("Registrarse", style: TextStyle(fontSize: 25, color: Colors.green)),
+                      
                     ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
+                    shape: StadiumBorder(),
                     
                     elevation: 0.0,
+                    
                     onPressed: (){
                       Navigator.pushNamed(context, opt[1]["ruta"]);
                     },
                   ),
 
-                  SizedBox(height: 50, width: double.infinity),
 
-                  //Boton Escanear
-                  RaisedButton(
-                    child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 75.0, vertical: 15.0),
-                        child: Text("Escanear", style: TextStyle(fontSize: 25, color: Colors.green),),
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    elevation: 0.0,
-                    onPressed: (){
-                      _scanQR().then((valor){
-                        return userProvider.getEncuestaByIdUser(qrEscaneado);
-
-                        
-                      }).then((response){
-                        print(response);
-                        this.mapa = response;
-                        Navigator.of(context).push(MaterialPageRoute( 
-                            builder: (context) => ScanPage(qrEscaneado, this.mapa["data"]),
-                          )
-                        );
-                      });  
-                    }                    
-                  ),
-                  SizedBox(height: 50, width: double.infinity)
                 ]
                     
                 ),
@@ -177,4 +143,19 @@ class _HomePageState extends State<HomePage> {
 
     ); 
   }
+
+  Widget card(String texto, String titulo){
+    return Card(
+      child: Column(
+        children: <Widget>[
+          ListTile(
+            leading: Icon(Icons.info_outline, color: Colors.green, size: 50.0,),
+            title: Text(titulo),
+            subtitle: Text(texto),
+          )
+        ],
+      ),
+    );
+  }
+  
 }

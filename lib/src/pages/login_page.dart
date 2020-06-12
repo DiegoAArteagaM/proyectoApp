@@ -36,16 +36,10 @@ class _LoginPage extends State<LoginPage>{
             if( tokenExpiration>currentTime ){
               Navigator.pushReplacementNamed(context, "/dashboard");
             }
-
           }on Exception catch(e){
-
             print(e.toString());
-
           }
-
-          
         }
-
         return Scaffold(
           body : Stack(
             children: <Widget>[
@@ -55,15 +49,17 @@ class _LoginPage extends State<LoginPage>{
           ),
           floatingActionButton: FloatingActionButton(
             backgroundColor: Colors.green,
+
             child: Icon(Icons.arrow_back),
             onPressed: (){         
               Navigator.pop(context);
             }
-          )
+          ),
         );
       },
     );
   }
+
 
   Widget _loginForm(BuildContext context){
     final size = MediaQuery.of(context).size;    
@@ -107,9 +103,7 @@ class _LoginPage extends State<LoginPage>{
                 _crearBoton(context)
               ],
             ),
-          ),
-        
-          Text("¿Olvidó su contraseña?")
+          )
         ],
       ),
     );
@@ -189,8 +183,8 @@ class _LoginPage extends State<LoginPage>{
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: <Color>[
-            Color.fromRGBO(41, 106, 67, 1.0),
-            Color.fromRGBO(2, 128, 53, 1.0)
+            Colors.green,
+            Colors.green
           ]
         ),
       ),
