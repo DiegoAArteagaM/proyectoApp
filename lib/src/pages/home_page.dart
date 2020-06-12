@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   String titulo3 = "Cuidate";
 
   String texto1 = "El correcto funcionamiento de esta aplicaion esta sujeto a la veracidad de la informacion proporcinada por los usuarios, por tal razon te solicitamos que los datos que brindes lo hagas de forma etica y sincera";
-  String texto2 = "La sinceridad de tus respuestas es primordial, por este motivo te recordamos que la Normatividad Colombiana para enfrentar la emergencia sanitaria en el Articulo 368 del codigo penal, obliga a la poblacion a seguir las indicaciones del gobierno para prevenir la propagacion del Covis-19, si mientes sobre tu estado de salud frente al Virus violaras este articulo ";
+  String texto2 = "La sinceridad de tus respuestas es primordial, por este motivo te recordamos que la Normatividad Colombiana para enfrentar la emergencia sanitaria en el Articulo 368 del codigo penal, obliga a la poblacion a seguir las indicaciones del gobierno para prevenir la propagacion del Covid-19, si mientes sobre tu estado de salud frente al Virus violaras este articulo ";
   String texto3 = "Esta App fue desarrollada con el fin de ayudar a mitigar los efectos del Covid-19, usa la opcion actualizar datos para actualizar tu estado de salud a diario y ayudar al Quindio a superar la emergencia sanitaria";
 
   Future _scanQR() async {
