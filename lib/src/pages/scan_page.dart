@@ -290,6 +290,48 @@ List<Widget> _crearItems(){
     );
   }  
 
+
+  int cantSintomas = 0;
+  Color color;
+
+  for( bool s in sintomas ){
+    if( s  )
+      cantSintomas++;
+  }
+
+  if( cantSintomas >= 10 )
+    color = Colors.red[900];
+  else if( cantSintomas >5 && cantSintomas < 9 )
+    color = Colors.yellowAccent; 
+  else 
+    color = Colors.green;
+
+
+  final semaforo = Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: <Widget>[
+        
+        ButtonTheme(
+          height: 55,
+          child:RaisedButton(
+
+            onPressed: () {},
+            elevation: 2.0,
+            color: color,
+          // padding: EdgeInsets.all(15.0),
+            shape: CircleBorder(),
+          
+          ) 
+        )
+    ],
+  );
+
+  lista.add(SizedBox(height:10));
+  lista.add(semaforo);
+  lista.add(Divider());
+  lista.add(Center(child:Text("semáforo", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color:Colors.grey[700]),)));
+  lista.add(Divider());
+
   lista.add(nameWid);
   lista.add(Divider());
   lista.add(emailW);

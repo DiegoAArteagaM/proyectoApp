@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         
         backgroundColor: Colors.green,
-        child: Icon(Icons.camera_alt, color: Colors.white, size: 40.0,),
+        child: Icon(Icons.compare, color: Colors.white, size: 40.0,),
         onPressed: (){
 
           _scanQR().then((valor){
@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
       builder: ( context, AsyncSnapshot<List<dynamic>> snapshot ){
           final List<dynamic> opt = snapshot.data; 
 
-          return Stack(
+          return ListView(
           children: <Widget>[ //Dibuja un circulo en el fondo
 
             Container(

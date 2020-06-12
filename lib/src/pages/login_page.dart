@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:formvalidation/src/providers/users_providers.dart';
 import 'package:formvalidation/src/utils/alert_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,10 +32,19 @@ class _LoginPage extends State<LoginPage>{
           try{
 
             int tokenExpiration = this._prefs.getInt("expiration");
-            int currentTime = (new DateTime.now().microsecondsSinceEpoch);
+            int currentTime = (DateTime.now().millisecondsSinceEpoch / 1000).toInt();
 
-            if( tokenExpiration>currentTime ){
-              Navigator.pushReplacementNamed(context, "/dashboard");
+
+            print("---->--->----> TOKEN");
+            print(tokenExpiration);
+            print(currentTime);
+
+            if( tokenExpiration!= null && tokenExpiration>currentTime ){
+              //Navigator.pushReplacementNamed(context, "/dashboard");
+               SchedulerBinding.instance.addPostFrameCallback((_) {
+                 Navigator.pushReplacementNamed(context, "/dashboard");
+                });
+                return Container();
             }
           }on Exception catch(e){
             print(e.toString());

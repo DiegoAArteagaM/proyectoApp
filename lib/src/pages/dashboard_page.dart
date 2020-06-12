@@ -59,41 +59,45 @@ class Dashboard extends StatelessWidget {
 
  
   Widget _buildBody(BuildContext context){
-    return Column(
+    return ListView(
       children: <Widget>[
-        SizedBox(
-          height: 80.0,
-        ),
-        Center(
-          child: Text(
-            "Hola "+this._prefs.getString("name"),
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 25,
-              color: Colors.green[900],
+        Column(
+          children: <Widget>[
+            SizedBox(
+              height: 45,
             ),
-          ),
-        ),
-        SizedBox(
-          height: 100,
-        ),
-        Center(
-          child: Text(
-            "ESTE ES TU CODIGO QR",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 25,
-              color: Colors.grey[850],
+            Center(
+              child: Text(
+                "Hola "+this._prefs.getString("name"),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25,
+                  color: Colors.green[900],
+                ),
+              ),
             ),
-          ),
-        ),
-        SizedBox(height: 15),
-        Center(
-          child: QrImage(
-            data: this._prefs.getString("user_id"),
-            version: QrVersions.auto,
-            size: 300.0,
-          ),
+            SizedBox(
+              height: 50,
+            ),
+            Center(
+              child: Text(
+                "ESTE ES TU CODIGO QR",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25,
+                  color: Colors.grey[850],
+                ),
+              ),
+            ),
+            SizedBox(height: 15),
+            Center(
+              child: QrImage(
+                data: this._prefs.getString("user_id"),
+                version: QrVersions.auto,
+                size: 260,
+              ),
+            )
+          ],
         )
       ],
     );
