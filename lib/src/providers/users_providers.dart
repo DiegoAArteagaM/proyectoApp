@@ -51,6 +51,7 @@ class UserProvider{
       _prefs.setString("user_id", payload['user_id']);
       _prefs.setInt("expiration", payload['exp']);
       _prefs.setString("user_token", responseMap["idToken"]);
+      _prefs.setString("name", "Usuario");
 
       return {
         "success":true,

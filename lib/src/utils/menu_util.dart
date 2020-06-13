@@ -99,6 +99,9 @@ class Menu extends StatelessWidget {
                 ],
               ),
               onTap: (){
+                this._prefs.remove("user_token");
+                this._prefs.remove("expiration");
+
                 SystemNavigator.pop();
               },
             ),
